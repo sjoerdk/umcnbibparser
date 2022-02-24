@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "bibparser"
+version = "0.1.0"
+description = "lateX bib format parser for deparment of medical imaging research websites"
+authors = ["sjoerdk <sjoerd.kerkstra@radboudumc.nl>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[tool.black]
+line-length = 79
+target-version = ['py37']
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

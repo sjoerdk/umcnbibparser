@@ -5,11 +5,11 @@ description = "lateX bib format parser for deparment of medical imaging research
 authors = ["sjoerdk <sjoerd.kerkstra@radboudumc.nl>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
-black = "^22.1.0"
+python = ">=3.7,<3.11"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "*"
+black = "^22.1.0"
 
 [tool.black]
 line-length = 79

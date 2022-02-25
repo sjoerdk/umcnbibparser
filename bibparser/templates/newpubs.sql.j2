@@ -1,0 +1,65 @@
+DROP TABLE IF EXISTS publications_previous;
+RENAME TABLE publications TO publications_previous;
+DROP TABLE IF EXISTS publications;
+CREATE TABLE publications (
+bibkey  varchar(256) DEFAULT NULL,
+entrytype varchar(64) DEFAULT NULL,
+genericentrytype varchar(64) DEFAULT NULL,
+author  TEXT(2048) DEFAULT NULL,
+title  TEXT(2048) DEFAULT NULL,
+journal  VARCHAR(512) DEFAULT NULL,
+booktitle  VARCHAR(512) DEFAULT NULL,
+series  VARCHAR(512) DEFAULT NULL,
+year  VARCHAR(4) DEFAULT NULL,
+volume  VARCHAR(32) DEFAULT NULL,
+pages  VARCHAR(32) DEFAULT NULL,
+number  VARCHAR(32) DEFAULT NULL,
+month  VARCHAR(6) DEFAULT NULL,
+part  VARCHAR(32) DEFAULT NULL,
+doi  VARCHAR(256) DEFAULT NULL,
+pmid  VARCHAR(256) DEFAULT NULL,
+gsid VARCHAR(256) DEFAULT NULL,
+url  VARCHAR(2048) DEFAULT NULL,
+pdf  VARCHAR(512) DEFAULT NULL,
+abstract  TEXT(8192) DEFAULT NULL,
+comment  TEXT(8192) DEFAULT NULL,
+owner  VARCHAR(512) DEFAULT NULL,
+school VARCHAR(1024) DEFAULT NULL,
+promotor  VARCHAR(512) DEFAULT NULL,
+copromotor  VARCHAR(512) DEFAULT NULL,
+timestamp  VARCHAR(32) DEFAULT NULL,
+optnote VARCHAR(512) DEFAULT NULL,
+optmonth VARCHAR(256) DEFAULT NULL,
+nationality VARCHAR(512) DEFAULT NULL,
+optnumber VARCHAR(512) DEFAULT NULL,
+PRIMARY KEY (bibkey),
+FULLTEXT(author)
+);
+{% for bibkey, entry in entries.items() %}
+INSERT INTO publications (bibkey, entrytype, genericentrytype, author, title, journal, year, volume, number, pages, month, part, doi, pmid, gsid, url, pdf, abstract, comment, owner, school, timestamp, optnote)
+VALUES (
+  '{{ bibkey }}',
+  '{{ entry.type }}',
+  '{{ entry.genericentrytype }}',
+  '{{ entry.authors }}',
+  '{{ entry.title }}',
+  '{{ entry.journal }}',
+  '{{ entry.year }}',
+  '{{ entry.volume }}',
+  '{{ entry.number }}',
+  '{{ entry.pages }}',
+  '{{ entry.optmonth }}',
+  '{{ entry.number }}',
+  '{{ entry.doi }}',
+  '{{ entry.pmid }}',
+  '',
+  '{{ entry.url }}',
+  '{{ entry.file }}',
+  '{{ entry.abstract }}',
+  '{{ entry.comment }}',
+  '{{ entry.owner }}',
+  '{{ entry.optinstitution }}',
+  '{{ entry.timestamp }}',
+  '{{ entry.optnote }}'
+);
+{% endfor %}

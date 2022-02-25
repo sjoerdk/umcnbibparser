@@ -10,12 +10,14 @@ from typing import Dict
 from jinja2.environment import Environment
 from jinja2.loaders import PackageLoader
 
-GENERIC_ENTRY_TYPES = {"article": "1_Article",
-                       "inproceedings": "2_Inproceedings",
-                       "abstract": "3_Abstract",
-                       "phdthesis": "4_PHDThesis",
-                       "book": "",
-                       "incollection": ""}
+GENERIC_ENTRY_TYPES = {
+    "article": "1_Article",
+    "inproceedings": "2_Inproceedings",
+    "abstract": "3_Abstract",
+    "phdthesis": "4_PHDThesis",
+    "book": "",
+    "incollection": "",
+}
 
 
 def enrich_parsed(parsed_bib: Dict) -> Dict:
@@ -27,10 +29,11 @@ def enrich_parsed(parsed_bib: Dict) -> Dict:
     """
     for key in parsed_bib.keys():
         try:
-            parsed_bib[key]['genericentrytype'] = \
-                GENERIC_ENTRY_TYPES[parsed_bib[key]['type'].lower()]
+            parsed_bib[key]["genericentrytype"] = GENERIC_ENTRY_TYPES[
+                parsed_bib[key]["type"].lower()
+            ]
         except KeyError as e:
-            raise(KeyError(f"Error in bib entry '{key}'")) from e
+            raise (KeyError(f"Error in bib entry '{key}'")) from e
 
     return parsed_bib
 

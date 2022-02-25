@@ -24,7 +24,9 @@ def get_bib_blocks(content, start_character="@", delim=("{", "}")):
             start = delimiter_stack.pop()
             if len(delimiter_stack) == 0:
                 start_index = content.rfind(start_character, 0, start)
-                blocks.append((content[start_index:start], content[start + 1 : i]))
+                blocks.append(
+                    (content[start_index:start], content[start + 1 : i])
+                )
     return blocks
 
 
@@ -95,7 +97,6 @@ def parse_bibtex_file(filename, full_strings_bib):
     return dictionary with bibkeys as keys and bib_items as values
     """
 
-
     full_strings_rules = get_full_strings(full_strings_bib)
     bib_items = {}
     string_rules = {}
@@ -127,7 +128,11 @@ def parse_bibtex_file(filename, full_strings_bib):
                     else:
                         name = name.replace("_", " ").strip()
                 elif name in full_strings_rules:
-                    name = full_strings_rules[bib_item["journal"]].strip("{").strip("}")
+                    name = (
+                        full_strings_rules[bib_item["journal"]]
+                        .strip("{")
+                        .strip("}")
+                    )
 
                 bib_item["journal"] = codecs.decode(name, "ulatex")
 
@@ -143,7 +148,9 @@ def parse_bibtex_file(filename, full_strings_bib):
                         name = name.replace("_", " ").strip()
                 elif bib_item["booktitle"] in full_strings_rules:
                     name = (
-                        full_strings_rules[bib_item["booktitle"]].strip("{").strip("}")
+                        full_strings_rules[bib_item["booktitle"]]
+                        .strip("{")
+                        .strip("}")
                     )
 
                 bib_item["booktitle"] = codecs.decode(name, "ulatex")
@@ -169,14 +176,18 @@ def parse_bibtex_file(filename, full_strings_bib):
                     .replace("}", "")
                     .replace("\\", "")
                 )
-                bib_item["coverpng"] = bib_key[0].title() + bib_key[1:] + ".png"
+                bib_item["coverpng"] = (
+                    bib_key[0].title() + bib_key[1:] + ".png"
+                )
 
             if "copromotor" in bib_item:
                 bib_item["author"] += list(
                     map(parse_name, split_authors(bib_item["copromotor"]))
                 )
                 bib_item["copromotor"] = authors_to_string(
-                    list(map(parse_name, split_authors(bib_item["copromotor"])))
+                    list(
+                        map(parse_name, split_authors(bib_item["copromotor"]))
+                    )
                 )
 
             if "promotor" in bib_item:
@@ -207,12 +218,20 @@ def parse_bibtex_file(filename, full_strings_bib):
                     bib_item["url_type"] = "medRxiv"
                 else:
                     bib_item["url_type"] = "Url"
-                    
+
             elif bib_item["type"] == "preprint":
-                if bib_item["journal"] and "arxiv" in bib_item["journal"].lower():
-                    bib_item["url"] = get_arxiv_id_from_title(bib_item["journal"])
+                if (
+                    bib_item["journal"]
+                    and "arxiv" in bib_item["journal"].lower()
+                ):
+                    bib_item["url"] = get_arxiv_id_from_title(
+                        bib_item["journal"]
+                    )
                     bib_item["url_type"] = "arXiv"
-                elif bib_item["journal"] and "medrxiv" in bib_item["journal"].lower():
+                elif (
+                    bib_item["journal"]
+                    and "medrxiv" in bib_item["journal"].lower()
+                ):
                     bib_item["url_type"] = "medRxiv"
                 else:
                     bib_item["url_type"] == "Url"
@@ -220,7 +239,7 @@ def parse_bibtex_file(filename, full_strings_bib):
             if "year" not in bib_item:
                 print("no year found in bibitem. skipping bibitem:", bib_item)
                 continue
-      
+
             bib_item["pubinfo"] = bib_item["year"].strip()
 
             bib_item["year"] = int(bib_item["year"])
@@ -261,7 +280,9 @@ def parse_bibtex_file(filename, full_strings_bib):
 
             bib_item["cover_exists"] = str(
                 os.path.exists(
-                    os.path.join(".", "content", "images", "theses", cover_path)
+                    os.path.join(
+                        ".", "content", "images", "theses", cover_path
+                    )
                 )
             )
 

@@ -79,7 +79,9 @@ def get_publications_by_author(bib_items, list_researchers):
                 lastnames.append("-".join(lastnames))
 
             for author_pub in authors:
-                if match_author_publication(firstname, lastnames, author_pub, bib_key):
+                if match_author_publication(
+                    firstname, lastnames, author_pub, bib_key
+                ):
                     author_bibkeys.setdefault(name.lower(), []).append(bib_key)
     return author_bibkeys
 
@@ -95,7 +97,9 @@ def match_author_publication(firstname, lastnames, author, bib_key):
     author = [xname.replace(".", " ").strip() for xname in author]
     first, von, last, jr = author
     first = first.lower()
-    last = "-".join(last.lower().replace("-", " ").replace("  ", " ").split(" "))
+    last = "-".join(
+        last.lower().replace("-", " ").replace("  ", " ").split(" ")
+    )
     jr = jr.lower()
 
     # Additional variable that may help to avoid incorrect name matching #77
@@ -134,12 +138,17 @@ def match_author_publication(firstname, lastnames, author, bib_key):
                 # If 'jr' contains something, it will have to be listed on 'initials_lastnames'
                 # to become a match
                 return True
-            elif len(von.strip()) >= 1 and von.strip()[0].lower() in initials_lastnames:
+            elif (
+                len(von.strip()) >= 1
+                and von.strip()[0].lower() in initials_lastnames
+            ):
                 # If 'von' contains something, it will have to be listed on 'initials_lastnames'
                 # to become a match
                 return True
             elif (
-                "-" != von_last[0] and len(lastnames) >= 2 and lastnames[-1] in von_last
+                "-" != von_last[0]
+                and len(lastnames) >= 2
+                and lastnames[-1] in von_last
             ):
                 # If none of the previous methods worked, an additional checkup is done.
                 # This is done only when having at least two last names.
@@ -241,7 +250,9 @@ def parse_name(name):
         jr = parts[1]
 
     else:
-        print('warning! bibtex format error in name "{}"'.format("".join(name)))
+        print(
+            'warning! bibtex format error in name "{}"'.format("".join(name))
+        )
         first, von, last, jr = "", "", name, ""
 
     nfirst = ""
@@ -302,5 +313,7 @@ def authors_to_string(names):
             d = " and "
         if idx == len(names) - 1:
             d = ""
-        string_authors += " ".join(part for part in [first, von, last, jr] if part) + d
+        string_authors += (
+            " ".join(part for part in [first, von, last, jr] if part) + d
+        )
     return string_authors

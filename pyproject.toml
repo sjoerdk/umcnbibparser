@@ -6,6 +6,7 @@ authors = ["sjoerdk <sjoerd.kerkstra@radboudumc.nl>"]
 
 [tool.poetry.dependencies]
 python = ">=3.7,<3.11"
+latexcodec = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"

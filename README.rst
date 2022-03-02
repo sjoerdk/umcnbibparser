@@ -2,11 +2,6 @@
 UMCN bib parser
 ===============
 
-.. image:: https://github.com/sjoerdk/umcnbibparser/workflows/build/badge.svg
-        :target: https://github.com/sjoerdk/umcnbibparser/actions?query=workflow%3Abuild
-        :alt: Build Status
-
-
 lateX bib format parser for department of medical imaging research websites
 
 

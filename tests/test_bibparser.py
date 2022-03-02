@@ -1,6 +1,10 @@
+from io import StringIO
+from unittest.mock import Mock
+
 import pytest as pytest
 
 from bibparser.bibreader import parse_bibtex_file
+from bibparser.core import convert_and_write_to_handle
 from bibparser.mysql import enrich_parsed, to_research_db_mysql
 from tests import RESOURCE_PATH
 
@@ -39,3 +43,14 @@ def test_to_mysql_db_file(a_parsed_bibfile):
 
     assert mysql.count("INSERT") == 100  # one insert for each item
     assert mysql.count("{{") == 0  # no jinja tags unreplaced
+
+
+def test_core_convert():
+    file = StringIO()
+    convert_and_write_to_handle(bibfile_path=RESOURCE_PATH / "some_entries.bib",
+                                bibstrings_path=RESOURCE_PATH / "fullstrings.bib",
+                                handle=file)
+    file.seek(0)
+    contents = file.read()
+    test = 1
+

@@ -5,7 +5,7 @@ from bibparser.mysql import enrich_for_db, to_research_db_mysql
 def convert(bibfile_path, bibstrings_path, output_path):
     print(f"Parsing {bibfile_path}")
     print(f"Using journal strings from  {bibstrings_path}")
-    with open(output_path, 'w') as handle:
+    with open(output_path, 'w', encoding='utf-8') as handle:
         convert_and_write_to_handle(bibfile_path, bibstrings_path, handle)
     print(f"Done. Written to {output_path}")
 

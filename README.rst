@@ -22,6 +22,14 @@ Installation
 
     pip install git+https://github.com/sjoerdk/umcnbibparser.git
 
+Upgrade
+-------
+* In a console, type::
+
+    pip install --upgrade git+https://github.com/sjoerdk/umcnbibparser.git
+
+Usage
+-----
 * create a file called `convert.py` with the following content (alter paths to fit your system)::
 
     from bibparser.core import convert

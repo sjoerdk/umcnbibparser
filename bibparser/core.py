@@ -1,5 +1,5 @@
 from bibparser.bibreader import parse_bibtex_file
-from bibparser.mysql import enrich_parsed, to_research_db_mysql
+from bibparser.mysql import enrich_for_db, to_research_db_mysql
 
 
 def convert(bibfile_path, bibstrings_path, output_path):
@@ -13,5 +13,7 @@ def convert(bibfile_path, bibstrings_path, output_path):
 def convert_and_write_to_handle(bibfile_path, bibstrings_path, handle):
     parsed = parse_bibtex_file(filename=bibfile_path,
                                full_strings_bib=bibstrings_path)
-    print(f"Parsed {len(parsed)} bib entries")
-    handle.write(to_research_db_mysql(enrich_parsed(parsed)))
+    print(f"Parsed {len(parsed)} bib entries from {bibfile_path}")
+    enriched = enrich_for_db(parsed)
+    print(f"Using {len(enriched)}, skipped {len(parsed) - len(enriched)}")
+    handle.write(to_research_db_mysql(enriched))

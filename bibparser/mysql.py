@@ -6,36 +6,51 @@ Functions here are not meant to be generic. Mysql db format is specific to the
 radboud research websites db
 """
 from typing import Dict
+from warnings import warn
 
 from jinja2.environment import Environment
 from jinja2.loaders import PackageLoader
 
+from bibparser.exceptions import BibParserError
+
 GENERIC_ENTRY_TYPES = {
     "article": "1_Article",
     "inproceedings": "2_Inproceedings",
-    "abstract": "3_Abstract",
+    "abstract": "3with pytest.warns(UserWarning):_Abstract",
     "phdthesis": "4_PHDThesis",
     "book": "",
     "incollection": "",
 }
 
 
-def enrich_parsed(parsed_bib: Dict) -> Dict:
+def get_generic_entry_type(entry_type: str):
+    entry_type = entry_type.lower()
+    if entry_type in GENERIC_ENTRY_TYPES:
+        return GENERIC_ENTRY_TYPES[entry_type]
+    else:
+        raise BibParserError(f"Unknown entry type '{entry_type}'. Valid entry types "
+                             f"are {[str(x) for x in GENERIC_ENTRY_TYPES.keys()]}")
+
+
+def enrich_for_db(parsed_bib: Dict) -> Dict:
     """Add legacy items to each bib entry needed in db for historical reasons
 
     Notes
     -----
-    Modifies input dict
+    * Modifies input dict
+    * Will warn and discard items if enriching fails
     """
+    enriched = {}
     for key in parsed_bib.keys():
+        item = parsed_bib[key]
         try:
-            parsed_bib[key]["genericentrytype"] = GENERIC_ENTRY_TYPES[
-                parsed_bib[key]["type"].lower()
-            ]
-        except KeyError as e:
-            raise (KeyError(f"Error in bib entry '{key}'")) from e
+            item["genericentrytype"] = get_generic_entry_type(item['type'])
+            enriched[key] = item
+        except BibParserError as e:
+            warn(f"Skipping bib item '{key}' due to error: {e}")
+            continue
 
-    return parsed_bib
+    return enriched
 
 
 def to_research_db_mysql(enriched_bib) -> str:

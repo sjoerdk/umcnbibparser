@@ -1,0 +1,2 @@
+class BibParserError(Exception):
+    pass

@@ -27,7 +27,6 @@ def a_parsed_ill_formed_bibfile():
     )
 
 
-
 def test_parse_bib():
     """Test basic usage. Just check for no exceptions here"""
     bib_items = parse_bibtex_file(
@@ -72,6 +71,16 @@ def test_core_convert():
                                 handle=file)
     file.seek(0)
     contents = file.read()
+
+
+def test_initial_handling():
+    """Test basic usage. Just check for no exceptions here"""
+    bib_items = parse_bibtex_file(
+        filename=RESOURCE_PATH / "multiple_initials_entry.bib",
+        full_strings_bib=RESOURCE_PATH / "fullstrings.bib",
+    )
+
+    assert len(bib_items) == 100
 
 
 

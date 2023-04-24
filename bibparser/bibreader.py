@@ -113,7 +113,9 @@ def parse_bibtex_file(filename, full_strings_bib):
         else:  # bib item text
 
             # parse bib item text
+
             bib_key, bib_item = parse_bib_block_content(block_content)
+            print(f"checking {bib_key} ...")
 
             # update type
             bib_item["type"] = block_name.strip("@").lower()
@@ -287,4 +289,5 @@ def parse_bibtex_file(filename, full_strings_bib):
             )
 
             bib_items[bib_key.lower()] = bib_item
+            print(f"added {bib_key.lower()}")
     return bib_items

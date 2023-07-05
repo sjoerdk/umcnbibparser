@@ -72,3 +72,15 @@ def to_csv(enriched_bib) -> str:
     template_env = Environment(loader=loader, autoescape=True)
     template = template_env.get_template("newpubs.csv.j2")
     return template.render(entries=enriched_bib)
+
+
+def to_csv_limited(enriched_bib) -> str:
+    """Render a subset of fields to a csv file
+    """
+
+    loader = PackageLoader(package_name="bibparser", package_path="templates")
+    template_env = Environment(loader=loader, autoescape=True)
+    template = template_env.get_template("newpubs_limited.csv.j2")
+    return template.render(entries=enriched_bib)
+
+

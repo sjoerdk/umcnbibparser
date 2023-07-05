@@ -1,0 +1,2 @@
+entrytype;author;title;journal;year;yearcreated;volume;pages;abstract;doi;pmid{% for bibkey, entry in entries.items() %}
+'{{ entry.type }}';'{{ entry.authors }}';'{{ entry.title }}';'{{ entry.journal }}';'{{ entry.year }}';'{{ entry.yearcreated }}';'{{ entry.volume }}';'{{ entry.pages }}';'{{ entry.abstract }}';'{{ entry.doi }}';'{{ entry.pmid }}'{% endfor %}

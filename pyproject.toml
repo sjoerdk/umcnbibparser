@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bibparser"
-version = "0.1.3"
+version = "0.1.4"
 description = "lateX bib format parser for department of medical imaging research websites"
 authors = ["sjoerdk <sjoerd.kerkstra@radboudumc.nl>"]
 
